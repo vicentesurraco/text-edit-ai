@@ -1,4 +1,4 @@
-from .config_manager import ConfigManager
+from config_manager import ConfigManager
 
 
 class PromptManager:

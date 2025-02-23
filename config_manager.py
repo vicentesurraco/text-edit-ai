@@ -3,7 +3,7 @@ import os
 
 
 class ConfigManager:
-    CONFIG_FILE = os.path.join(os.path.expanduser("~"), ".book_editor.cfg")
+    CONFIG_FILE = os.path.join(os.path.expanduser("~"), ".ai_text_editor.cfg")
 
     def __init__(self):
         self.config = self.get_config()
@@ -31,6 +31,20 @@ class ConfigManager:
         if file not in self.config:
             self.config[file] = {}
         return self.config[file]
+
+    def get_api_key(self):
+        """Get API key from config, set it if None"""
+        api_key = self.config["DEFAULT"].get("api_key")
+        if not api_key:
+            return self.set_api_key()
+        return api_key
+
+    def set_api_key(self):
+        """Set API key in config"""
+        api_key = input("Enter your API key: ")
+        self.config["DEFAULT"]["api_key"] = api_key
+        self.save_config()
+        print("API key set successfully.")
 
     def set_pos(self, file, pos):
         """

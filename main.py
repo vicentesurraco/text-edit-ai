@@ -1,10 +1,7 @@
-from .config_manager import ConfigManager
-from .api_manager import APIManager
-from .prompt_manager import PromptManager
-from .langchain_manager import LangchainManager
+from config_manager import ConfigManager
+from prompt_manager import PromptManager
+from langchain_manager import LangchainManager
 import argparse
-
-import langchain_manager
 
 
 def save_progress():
@@ -20,8 +17,6 @@ def get_next_pos(pos, file):
 
 
 def display_response(res):
-    for token in model.stream(messages):
-        print(token.content, end="|")
     pass
 
 
@@ -32,6 +27,7 @@ def change_response_size():
 def process_file(
     config_manager: ConfigManager,
     prompt_manager: PromptManager,
+    langchain_manager: LangchainManager,
     file: str,
     section_prompt: str = "",
 ):
@@ -95,20 +91,19 @@ def main():
     """
     parser = argparse.ArgumentParser(description="AI Book Editor")
     parser.add_argument("file", nargs="?", help="The book file to edit")
-    parser.add_argument("--set-prompt", help="Set the editing prompt for the file")
-    parser.add_argument("--set-api-key", action="store_true", help="Set the API key")
+    parser.add_argument("--prompt", help="Set the system prompt for this file")
+    parser.add_argument("--api-key", action="store_true", help="Set the API key")
 
     args = parser.parse_args()
 
-    api_manager = APIManager()
     config_manager = ConfigManager()
     prompt_manager = PromptManager(config_manager)
 
-    if args.set_api_key:
-        api_manager.set_api_key()
+    if args.api_key:
+        config_manager.set_api_key()
         return
 
-    langchain_manager = LangchainManager(api_manager.api_key)
+    langchain_manager = LangchainManager(config_manager.get_api_key())
 
     if args.set_prompt and args.file:
         prompt_manager.set_system_prompt(args.file, args.set_prompt)
@@ -125,3 +120,7 @@ def main():
         langchain_manager,
         args.file,
     )
+
+
+if __name__ == "__main__":
+    main()
