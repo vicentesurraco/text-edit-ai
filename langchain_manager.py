@@ -1,5 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
-from langchain.chat_models import init_chat_model
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 
 #
@@ -9,9 +9,10 @@ SYSTEM_PROMPT = """You are a writing editor. Edit the section of text in <writin
 
 class LangchainManager:
     def __init__(self, api_key):
-        self.api_key = api_key
         self.system_prompt = SYSTEM_PROMPT
-        self.model = init_chat_model("gemini-2.0-flash", temperature=0)
+        self.model = ChatGoogleGenerativeAI(
+            model="gemini-2.0-flash", google_api_key=api_key, temperature=0
+        )
 
     def get_response(self, context, writing):
         prompt = ChatPromptTemplate.from_messages(
@@ -20,10 +21,12 @@ class LangchainManager:
                 ("user", f"<context>{context}</context><writing>{writing}</writing>"),
             ]
         )
-        full_response = ""
-        for token in self.model.stream(prompt):
-            full_response += token.content
-            print(token.content)
+        messages = prompt.format_messages()
 
-        print(f"\n\n here's the full response {full_response}")
-        return full_response
+        response = ""
+        for token in self.model.stream(messages):
+            content = token.content
+            response += content
+
+        print(f"\n{response}\n")
+        return response

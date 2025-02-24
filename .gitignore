@@ -171,3 +171,4 @@ cython_debug/
 #.idea/
 .DS_Store
 input.txt
+input_edited.txt
