@@ -10,6 +10,3 @@ class PromptManager:
 
     def set_system_prompt(self, file, system_prompt):
         return self.config_manager.set_system_prompt(file, system_prompt)
-
-    def set_section_prompt(self, file, section_prompt):
-        pass
