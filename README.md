@@ -40,11 +40,11 @@ Run the tool with the following command:
    - `continue`: Use AI to suggest edits.
    - `skip`: Keep the section as is.
    - `size`: Change the number of paragraphs per section.
-   - `exit`: Stop the editing process.
+   - `exit`: Exit the program.
 3. **AI suggestions**: If `continue` is chosen, the AI provides an edited version of the section. The user can then:
    - `accept`: Save the AI's suggestion.
    - `skip`: Keep the original section.
    - `edit`: Provide a new prompt for the AI to re-edit the section.
-   - `size`: Change the section size.
-   - `exit`: Stop the process.
+   - `size`: Change the number of paragraphs per section.
+   - `exit`: Exit the program.
 4. **Output**: Edited or skipped sections are appended to a new file named `[original_filename]_edited.txt`.
