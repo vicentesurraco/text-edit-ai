@@ -4,23 +4,7 @@ from langchain_manager import LangchainManager
 import argparse
 
 
-def save_progress():
-    pass
-
-
 def show_diff():
-    pass
-
-
-def get_next_pos(pos, file):
-    pass
-
-
-def display_response(res):
-    pass
-
-
-def change_response_size():
     pass
 
 
