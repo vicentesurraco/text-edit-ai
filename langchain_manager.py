@@ -28,5 +28,4 @@ class LangchainManager:
             content = token.content
             response += content
 
-        print(f"\n{response}\n")
         return response
