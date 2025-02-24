@@ -1,11 +1,11 @@
-# AI Book Editor
+# AI Text Editor
 
-A command-line tool for editing books with the assistance of AI, using language models to suggest improvements or changes to text sections.
+A command-line tool for editing text with the assistance of AI, using language models to suggest improvements or changes to text sections.
 
 ## Installation
 
 1. Clone the repository:
-   Run `git clone https://github.com/yourusername/ai-book-editor.git` and then `cd ai-book-editor`.
+   Run `git clone https://github.com/yourusername/text-edit-ai.git` and then `cd text-edit-ai`.
 
 2. Install the required dependencies:
    Run `uv sync --lockfile uv.lock`.
@@ -24,7 +24,7 @@ Run the tool with the following command:
 
 ### Examples
 
-- To edit a book file named `my_book.txt`:
+- To edit a text file named `my_book.txt`:
   `python main.py my_book.txt`
 
 - To set the API key:
