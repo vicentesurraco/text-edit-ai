@@ -15,7 +15,7 @@ A command-line tool for editing text with the assistance of AI, using language m
 ## Usage
 
 Run the tool with the following command:
-`python main.py [file] [options]`
+`uv run -m text_edit_ai.cli [file] [options]`
 
 ### Options
 
