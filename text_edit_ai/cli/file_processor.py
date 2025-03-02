@@ -1,6 +1,6 @@
-from config_manager import ConfigManager
-from prompt_manager import PromptManager
-from langchain_manager import LangchainManager
+from .config_manager import ConfigManager
+from .prompt_manager import PromptManager
+from .langchain_manager import LangchainManager
 
 
 class FileProcessor:

@@ -2,8 +2,6 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 
-#
-# SYSTEM_PROMPT = """You are a professional writing editor. You take instructions from the user in the context section, and respond to a user's writings in the writing section with a complete new draft, and offer no commentary before or after."""
 SYSTEM_PROMPT = """You are a writing editor. Edit the section of text in <writing> based on the instructions in <context>. Respond only with the revised text."""
 
 

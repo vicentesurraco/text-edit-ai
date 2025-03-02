@@ -1,7 +1,7 @@
-from config_manager import ConfigManager
-from prompt_manager import PromptManager
-from langchain_manager import LangchainManager
-from file_processor import FileProcessor
+from .config_manager import ConfigManager
+from .prompt_manager import PromptManager
+from .langchain_manager import LangchainManager
+from .file_processor import FileProcessor
 import argparse
 
 
