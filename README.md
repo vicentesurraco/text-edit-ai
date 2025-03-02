@@ -58,8 +58,7 @@ green = 7EC752 # Used for accept/continue/added markup
 red = FF6D52 # Used for exit/removed markup
 yellow = FFBA08 # Used for skip
 blue = 5BC0BE # Used for size
-grey = C8C8A9 # Used for section headers
-purple = DF78EF # Used for markup display
+purple = DF78EF # Used for markup display and section headers
 orange = FF9300 # Used for section/system prompt options
 ```
 

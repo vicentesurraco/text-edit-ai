@@ -6,7 +6,6 @@ class Colors:
         "red": "FE6B7B",
         "yellow": "FFC569",
         "blue": "63E4FE",
-        "grey": "C796FE",
         "purple": "C796FE",
         "orange": "FF7F01",
     }
@@ -16,7 +15,6 @@ class Colors:
     red = ""
     yellow = ""
     blue = ""
-    grey = ""
     purple = ""
     orange = ""
 

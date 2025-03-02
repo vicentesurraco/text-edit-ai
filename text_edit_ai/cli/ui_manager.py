@@ -6,9 +6,9 @@ class UIManager:
 
     def get_initial_action(self, section: str) -> str:
         """Get initial action from user for a section."""
-        print(f"\n{Colors.grey}=== ORIGINAL ==={Colors.reset}")
+        print(f"\n{Colors.purple}=== ORIGINAL ==={Colors.reset}")
         print(f"\n{section}\n")
-        print(f"{Colors.grey}=== ORIGINAL ==={Colors.reset}\n")
+        print(f"{Colors.purple}=== ORIGINAL ==={Colors.reset}\n")
 
         while True:
             action = (
@@ -95,9 +95,9 @@ class UIManager:
 
     def display_edited(self, edited_text: str) -> None:
         """Display the edited text."""
-        print(f"\n{Colors.grey}=== AI EDIT ==={Colors.reset}")
+        print(f"\n{Colors.purple}=== AI EDIT ==={Colors.reset}")
         print(f"\n{edited_text}\n")
-        print(f"{Colors.grey}=== AI EDIT ==={Colors.reset}\n")
+        print(f"{Colors.purple}=== AI EDIT ==={Colors.reset}\n")
 
     def display_markup(self, diff_text: str) -> None:
         """Display the markup text."""
