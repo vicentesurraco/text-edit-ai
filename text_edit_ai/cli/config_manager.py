@@ -18,7 +18,6 @@ class ConfigManager:
         self.config = configparser.ConfigParser()
         self.config.read(self.CONFIG_FILE)
 
-        # Ensure default section exists
         if "DEFAULT" not in self.config:
             self.config["DEFAULT"] = {}
 

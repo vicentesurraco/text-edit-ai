@@ -59,13 +59,3 @@ class LangchainManager:
             self.config_manager.set_model()
             self.__init__(self.config_manager)
             return self.get_response(context, writing)
-
-    def cleanup(self):
-        """Clean up resources to prevent gRPC timeout errors."""
-        if hasattr(self.model, "client"):
-            if hasattr(self.model.client, "close"):
-                try:
-                    self.model.client.close()
-                except Exception:
-                    pass
-        self.model = None
