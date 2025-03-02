@@ -1,7 +1,7 @@
 """Tests for the SessionManager class."""
 
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
 from text_edit_ai.cli.session_manager import SessionManager
 
 

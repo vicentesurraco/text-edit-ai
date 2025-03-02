@@ -20,7 +20,7 @@ Run the tool with the following command:
 ### Options
 
 - `--api-key`: Set the API key for the language model.
-- `--prompt "Your prompt"`: Set a custom system prompt for the specified file.
+- `--prompt "Your prompt"`: Set a custom file prompt for the specified file.
 - `--model "model_name"`: Use a specific model for this session (e.g., "gemini-2.0-flash", "gpt-4-turbo").
 
 ### Examples
@@ -31,7 +31,7 @@ Run the tool with the following command:
 - To set the API key:
   `uv run -m text_edit_ai.cli --api-key`
 
-- To set a custom system prompt for `my_book.txt`:
+- To set a custom file prompt for `my_book.txt`:
   `uv run -m text_edit_ai.cli my_book.txt --prompt "Improve the clarity and conciseness of this text."`
 
 - To use a specific model for the current editing session:
@@ -43,7 +43,7 @@ The tool stores configurations in `~/.ai_text_editor.cfg`:
 
 - **API Keys**: Securely stores your language model API key
 - **Models**: Saves your default model selection
-- **Prompts**: File-specific system prompts
+- **Prompts**: File-specific file prompts
 - **Colors**: Customizable color schemes for the UI
 - **File Position**: Remembers where you left off in each file
 
@@ -59,7 +59,7 @@ red = FF6D52 # Used for exit/removed markup
 yellow = FFBA08 # Used for skip
 blue = 5BC0BE # Used for size
 purple = DF78EF # Used for markup display and section headers
-orange = FF9300 # Used for section/system prompt options
+orange = FF9300 # Used for section/file prompt options
 ```
 
 ## Workflow
@@ -76,7 +76,7 @@ orange = FF9300 # Used for section/system prompt options
    - `accept`: Save the AI's suggestion.
    - `skip`: Keep the original section.
    - `section prompt`: Provide a new prompt for the AI to re-edit the current section.
-   - `system prompt`: Change the system prompt used for all future edits.
+   - `file prompt`: Change the file prompt used for all future edits.
    - `markup`: View changes with colorized markup showing additions and deletions.
    - `size`: Change the number of paragraphs per section.
    - `exit`: Exit the program.

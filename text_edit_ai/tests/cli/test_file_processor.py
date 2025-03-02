@@ -1,7 +1,7 @@
 """Tests for the FileProcessor class."""
 
 import pytest
-from unittest.mock import patch, MagicMock, mock_open, call
+from unittest.mock import patch, MagicMock, mock_open
 from text_edit_ai.cli.file_processor import FileProcessor
 
 
@@ -117,12 +117,12 @@ def test_process_with_ai_accept(file_processor, mock_dependencies):
     """Test processing a section with AI and accepting the edit."""
     fp, test_file = file_processor
     section = "Test section"
-    system_prompt = "Test system prompt"
+    file_prompt = "Test file prompt"
     edited_text = "Edited section"
     diff_text = "Diff text"
 
     # Set up the mocks
-    mock_dependencies["config_manager"].get_system_prompt.return_value = system_prompt
+    mock_dependencies["config_manager"].get_file_prompt.return_value = file_prompt
     mock_dependencies["langchain_manager"].get_response.return_value = edited_text
     mock_dependencies["markup_manager"].generate_diff.return_value = diff_text
     mock_dependencies["ui_manager"].get_ai_action.return_value = "accept"
@@ -131,14 +131,14 @@ def test_process_with_ai_accept(file_processor, mock_dependencies):
     with patch.object(FileProcessor, "_write_section") as mock_write_section:
         fp._process_with_ai(section)
 
-        # Check that the config manager was called to get the system prompt
-        mock_dependencies["config_manager"].get_system_prompt.assert_called_once_with(
+        # Check that the config manager was called to get the file prompt
+        mock_dependencies["config_manager"].get_file_prompt.assert_called_once_with(
             test_file
         )
 
         # Check that the langchain manager was called to get the response
         mock_dependencies["langchain_manager"].get_response.assert_called_once_with(
-            system_prompt, section
+            file_prompt, section
         )
 
         # Check that the markup manager was called to generate the diff
@@ -162,12 +162,12 @@ def test_process_with_ai_skip(file_processor, mock_dependencies):
     """Test processing a section with AI and skipping the edit."""
     fp, test_file = file_processor
     section = "Test section"
-    system_prompt = "Test system prompt"
+    file_prompt = "Test file prompt"
     edited_text = "Edited section"
     diff_text = "Diff text"
 
     # Set up the mocks
-    mock_dependencies["config_manager"].get_system_prompt.return_value = system_prompt
+    mock_dependencies["config_manager"].get_file_prompt.return_value = file_prompt
     mock_dependencies["langchain_manager"].get_response.return_value = edited_text
     mock_dependencies["markup_manager"].generate_diff.return_value = diff_text
     mock_dependencies["ui_manager"].get_ai_action.return_value = "skip"
@@ -187,7 +187,7 @@ def test_process_with_ai_section_prompt(file_processor, mock_dependencies):
     """Test processing a section with AI and providing a section prompt."""
     fp, test_file = file_processor
     section = "Test section"
-    system_prompt = "Test system prompt"
+    file_prompt = "Test file prompt"
     section_prompt = "Test section prompt"
     edited_text1 = "Edited section 1"
     edited_text2 = "Edited section 2"
@@ -195,7 +195,7 @@ def test_process_with_ai_section_prompt(file_processor, mock_dependencies):
     diff_text2 = "Diff text 2"
 
     # Set up the mocks
-    mock_dependencies["config_manager"].get_system_prompt.return_value = system_prompt
+    mock_dependencies["config_manager"].get_file_prompt.return_value = file_prompt
     mock_dependencies["langchain_manager"].get_response.side_effect = [
         edited_text1,
         edited_text2,
@@ -219,19 +219,19 @@ def test_process_with_ai_section_prompt(file_processor, mock_dependencies):
 
         # Check that the langchain manager was called with the combined prompt
         mock_dependencies["langchain_manager"].get_response.assert_any_call(
-            f"{system_prompt}\n{section_prompt}", section
+            f"{file_prompt}\n{section_prompt}", section
         )
 
         # Check that the edited text was written
         mock_write_section.assert_called_once_with(edited_text2)
 
 
-def test_process_with_ai_system_prompt(file_processor, mock_dependencies):
-    """Test processing a section with AI and providing a system prompt."""
+def test_process_with_ai_file_prompt(file_processor, mock_dependencies):
+    """Test processing a section with AI and providing a file prompt."""
     fp, test_file = file_processor
     section = "Test section"
-    old_system_prompt = "Old system prompt"
-    new_system_prompt = "New system prompt"
+    old_file_prompt = "Old file prompt"
+    new_file_prompt = "New file prompt"
     edited_text1 = "Edited section 1"
     edited_text2 = "Edited section 2"
     diff_text1 = "Diff text 1"
@@ -240,7 +240,7 @@ def test_process_with_ai_system_prompt(file_processor, mock_dependencies):
     # Set up the mocks
     mock_dependencies[
         "config_manager"
-    ].get_system_prompt.return_value = old_system_prompt
+    ].get_file_prompt.return_value = old_file_prompt
     mock_dependencies["langchain_manager"].get_response.side_effect = [
         edited_text1,
         edited_text2,
@@ -250,26 +250,26 @@ def test_process_with_ai_system_prompt(file_processor, mock_dependencies):
         diff_text2,
     ]
     mock_dependencies["ui_manager"].get_ai_action.side_effect = [
-        "system_prompt",
+        "file_prompt",
         "accept",
     ]
-    mock_dependencies["ui_manager"].get_system_prompt.return_value = new_system_prompt
+    mock_dependencies["ui_manager"].get_file_prompt.return_value = new_file_prompt
 
     # Call the method
     with patch.object(FileProcessor, "_write_section") as mock_write_section:
         fp._process_with_ai(section)
 
-        # Check that the system prompt was requested
-        mock_dependencies["ui_manager"].get_system_prompt.assert_called_once()
+        # Check that the file prompt was requested
+        mock_dependencies["ui_manager"].get_file_prompt.assert_called_once()
 
-        # Check that the config manager was called to set the system prompt
-        mock_dependencies["config_manager"].set_system_prompt.assert_called_once_with(
-            test_file, new_system_prompt
+        # Check that the config manager was called to set the file prompt
+        mock_dependencies["config_manager"].set_file_prompt.assert_called_once_with(
+            test_file, new_file_prompt
         )
 
         # Check that the langchain manager was called with the new prompt
         mock_dependencies["langchain_manager"].get_response.assert_any_call(
-            new_system_prompt, section
+            new_file_prompt, section
         )
 
         # Check that the edited text was written
@@ -280,11 +280,11 @@ def test_process_with_ai_size(file_processor, mock_dependencies):
     """Test processing a section with AI and changing the section size."""
     fp, test_file = file_processor
     section = "Test section"
-    system_prompt = "Test system prompt"
+    file_prompt = "Test file prompt"
     new_size = 5
 
     # Set up the mocks
-    mock_dependencies["config_manager"].get_system_prompt.return_value = system_prompt
+    mock_dependencies["config_manager"].get_file_prompt.return_value = file_prompt
     mock_dependencies["ui_manager"].get_ai_action.return_value = "size"
     mock_dependencies["ui_manager"].get_section_size.return_value = new_size
 
@@ -307,10 +307,10 @@ def test_process_with_ai_exit(file_processor, mock_dependencies):
     """Test processing a section with AI and exiting."""
     fp, test_file = file_processor
     section = "Test section"
-    system_prompt = "Test system prompt"
+    file_prompt = "Test file prompt"
 
     # Set up the mocks
-    mock_dependencies["config_manager"].get_system_prompt.return_value = system_prompt
+    mock_dependencies["config_manager"].get_file_prompt.return_value = file_prompt
     mock_dependencies["ui_manager"].get_ai_action.return_value = "exit"
 
     # Call the method

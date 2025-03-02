@@ -1,9 +1,7 @@
 """Tests for the ConfigManager class."""
 
-import os
 import pytest
-from unittest.mock import patch, mock_open, MagicMock
-import configparser
+from unittest.mock import patch, MagicMock
 from text_edit_ai.cli.config_manager import ConfigManager
 from text_edit_ai.cli.colors import Colors
 
@@ -95,40 +93,17 @@ def test_get_pos_default(config_manager):
     assert result == 0
 
 
-def test_set_system_prompt(config_manager):
-    """Test setting system prompt for a file."""
+def test_set_file_prompt(config_manager):
+    """Test setting file prompt for a file."""
     test_file = "test_file.txt"
-    test_prompt = "Test system prompt"
+    test_prompt = "Test file prompt"
     file_config = {}
 
     with patch.object(ConfigManager, "get_file_config", return_value=file_config):
         with patch.object(ConfigManager, "save_config"):
-            config_manager.set_system_prompt(test_file, test_prompt)
+            config_manager.set_file_prompt(test_file, test_prompt)
 
-    assert file_config["system_prompt"] == test_prompt
-
-
-def test_get_system_prompt(config_manager):
-    """Test getting system prompt for a file."""
-    test_file = "test_file.txt"
-    test_prompt = "Test system prompt"
-    file_config = {"system_prompt": test_prompt}
-
-    with patch.object(ConfigManager, "get_file_config", return_value=file_config):
-        result = config_manager.get_system_prompt(test_file)
-
-    assert result == test_prompt
-
-
-def test_get_system_prompt_default(config_manager):
-    """Test getting default system prompt when not set."""
-    test_file = "test_file.txt"
-    file_config = {}
-
-    with patch.object(ConfigManager, "get_file_config", return_value=file_config):
-        result = config_manager.get_system_prompt(test_file)
-
-    assert result == ""
+    assert file_config["file_prompt"] == test_prompt
 
 
 def test_get_color_default(config_manager, mock_config):

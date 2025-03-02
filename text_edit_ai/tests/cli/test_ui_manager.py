@@ -1,8 +1,7 @@
 """Tests for the UIManager class."""
 
 import pytest
-from unittest.mock import patch, call
-from io import StringIO
+from unittest.mock import patch
 from text_edit_ai.cli.ui_manager import UIManager
 from text_edit_ai.cli.colors import Colors
 
@@ -72,14 +71,6 @@ def test_get_ai_action_section_prompt(ui_manager):
         assert result == "section_prompt"
 
 
-def test_get_ai_action_system_prompt(ui_manager):
-    """Test getting AI action with 'system_prompt' response."""
-    with patch("builtins.input", return_value="y"):
-        result = ui_manager.get_ai_action("Edited text", "Diff text")
-
-        assert result == "system_prompt"
-
-
 def test_get_ai_action_size(ui_manager):
     """Test getting AI action with 'size' response."""
     with patch("builtins.input", return_value="z"):
@@ -124,22 +115,22 @@ def test_get_section_prompt_empty(ui_manager):
             mock_print.assert_called_once_with("Section prompt change canceled.")
 
 
-def test_get_system_prompt(ui_manager):
-    """Test getting system prompt."""
-    with patch("builtins.input", return_value="Test system prompt"):
-        result = ui_manager.get_system_prompt()
+def test_get_file_prompt(ui_manager):
+    """Test getting file prompt."""
+    with patch("builtins.input", return_value="Test file prompt"):
+        result = ui_manager.get_file_prompt()
 
-        assert result == "Test system prompt"
+        assert result == "Test file prompt"
 
 
-def test_get_system_prompt_empty(ui_manager):
-    """Test getting empty system prompt."""
+def test_get_file_prompt_empty(ui_manager):
+    """Test getting empty file prompt."""
     with patch("builtins.input", return_value=""):
         with patch("builtins.print") as mock_print:
-            result = ui_manager.get_system_prompt()
+            result = ui_manager.get_file_prompt()
 
             assert result == ""
-            mock_print.assert_called_once_with("System prompt change canceled.")
+            mock_print.assert_called_once_with("File prompt change canceled.")
 
 
 def test_get_section_size(ui_manager):

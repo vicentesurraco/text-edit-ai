@@ -111,18 +111,39 @@ class ConfigManager:
         file_config = self.get_file_config(file)
         return int(file_config.get("position", "0"))
 
-    def set_system_prompt(self, file, system_prompt):
+    def get_file_prompt(self, file=None):
         """
-        Set the system prompt for the specified file.
+        Get the file prompt from config.
+        If file is specified, get file-specific prompt.
+        Otherwise, get the global default prompt.
+        Returns global prompt if not set and prompts user to set it.
         """
-        file_config = self.get_file_config(file)
-        file_config["system_prompt"] = system_prompt
-        self.save_config()
+        if file:
+            file_config = self.get_file_config(file)
+            return file_config.get("file_prompt", self.get_file_prompt())
+        
+        file_prompt = self.config["DEFAULT"].get("file_prompt")
+        if not file_prompt:
+            return self.set_file_prompt()
+        return file_prompt
 
-    def get_system_prompt(self, file):
+    def set_file_prompt(self, file=None, file_prompt=None):
         """
-        Get the system prompt for the specified file.
-        Returns an empty string if not set.
+        Set the file prompt in config.
+        If file is specified, set file-specific prompt.
+        Otherwise, set the global default prompt.
         """
-        file_config = self.get_file_config(file)
-        return file_config.get("system_prompt", "")
+        while not file_prompt:
+            file_prompt = input("Enter the file prompt: ")
+        
+        if file:
+            file_config = self.get_file_config(file)
+            file_config["file_prompt"] = file_prompt
+            self.save_config()
+            print(f"File prompt set for {file}.")
+        else:
+            self.config["DEFAULT"]["file_prompt"] = file_prompt
+            self.save_config()
+            print("File prompt set successfully.")
+        
+        return file_prompt

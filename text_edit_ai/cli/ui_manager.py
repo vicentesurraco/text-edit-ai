@@ -43,7 +43,7 @@ class UIManager:
                     f"{Colors.green}(a)ccept{Colors.reset} / "
                     f"{Colors.yellow}(s)kip{Colors.reset} / "
                     f"{Colors.orange}se(c)tion prompt{Colors.reset} / "
-                    f"{Colors.orange}s(y)stem prompt{Colors.reset} / "
+                    f"{Colors.orange}(f)ile prompt{Colors.reset} / "
                     f"{Colors.blue}si(z)e{Colors.reset} / "
                     f"{Colors.red}e(x)it{Colors.reset} / "
                     f"{Colors.purple}(m)arkup{Colors.reset}: "
@@ -58,8 +58,8 @@ class UIManager:
                 return "skip"
             elif action in {"section", "c"}:
                 return "section_prompt"
-            elif action in {"system", "y"}:
-                return "system_prompt"
+            elif action in {"file", "f"}:
+                return "file_prompt"
             elif action in {"markup", "m"}:
                 self.display_markup(diff_text)
             elif action in {"size", "z"}:
@@ -77,11 +77,11 @@ class UIManager:
             return ""
         return prompt
 
-    def get_system_prompt(self) -> str:
-        """Get a new system prompt from the user."""
-        prompt = input("Enter new system prompt (empty to cancel): ")
+    def get_file_prompt(self) -> str:
+        """Get a new file prompt from the user."""
+        prompt = input("Enter new file prompt (empty to cancel): ")
         if prompt.strip().lower() in ["", "cancel"]:
-            print("System prompt change canceled.")
+            print("File prompt change canceled.")
             return ""
         return prompt
 

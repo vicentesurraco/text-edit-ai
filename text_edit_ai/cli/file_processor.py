@@ -67,8 +67,8 @@ class FileProcessor:
 
     def _process_with_ai(self, section: str) -> None:
         """Process a section with AI assistance."""
-        system_prompt = self.config_manager.get_system_prompt(self.file)
-        edited = self.langchain_manager.get_response(system_prompt, section)
+        file_prompt = self.config_manager.get_file_prompt(self.file)
+        edited = self.langchain_manager.get_response(file_prompt, section)
         diff = self.markup_manager.generate_diff(section, edited)
 
         while True:
@@ -87,15 +87,15 @@ class FileProcessor:
                 if not prompt:  # Canceled
                     continue
 
-                combined_prompt = f"{system_prompt}\n{prompt}"
+                combined_prompt = f"{file_prompt}\n{prompt}"
                 edited = self.langchain_manager.get_response(combined_prompt, section)
                 diff = self.markup_manager.generate_diff(section, edited)
-            elif action == "system_prompt":
-                prompt = self.ui_manager.get_system_prompt()
+            elif action == "file_prompt":
+                prompt = self.ui_manager.get_file_prompt()
                 if not prompt:  # Canceled
                     continue
 
-                self.config_manager.set_system_prompt(self.file, prompt)
+                self.config_manager.set_file_prompt(self.file, prompt)
                 edited = self.langchain_manager.get_response(prompt, section)
                 diff = self.markup_manager.generate_diff(section, edited)
             elif action == "size":

@@ -1,7 +1,7 @@
 """Tests for the MarkupManager class."""
 
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from text_edit_ai.cli.markup_manager import MarkupManager
 from text_edit_ai.cli.colors import Colors
 

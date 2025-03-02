@@ -23,7 +23,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="AI Book Editor")
     parser.add_argument("file", nargs="?", help="The book file to edit")
-    parser.add_argument("--prompt", help="Set the system prompt for this file")
+    parser.add_argument("--prompt", help="Set the file prompt for this file")
     parser.add_argument("--api-key", action="store_true", help="Set the API key")
     parser.add_argument(
         "--model",
@@ -44,8 +44,8 @@ def main():
     langchain_manager = LangchainManager(config_manager)
 
     if args.prompt and args.file:
-        config_manager.set_system_prompt(args.file, args.prompt)
-        print(f"System prompt set to: {args.prompt} for {args.file}")
+        config_manager.set_file_prompt(args.file, args.prompt)
+        print(f"File prompt set to: {args.prompt} for {args.file}")
         return
 
     if not args.file:

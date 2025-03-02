@@ -1,7 +1,7 @@
 """Tests for the LangchainManager class."""
 
 import pytest
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import patch, MagicMock
 from text_edit_ai.cli.langchain_manager import LangchainManager, SYSTEM_PROMPT
 
 

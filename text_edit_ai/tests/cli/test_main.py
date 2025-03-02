@@ -2,7 +2,6 @@
 
 import unittest
 from unittest.mock import patch, MagicMock
-import argparse
 from text_edit_ai.cli.__main__ import main, setup_terminal_colors
 
 
