@@ -28,7 +28,7 @@ class ConfigManager:
         """Ensure color configuration exists with defaults."""
         if "COLORS" not in self.config:
             self.config["COLORS"] = {}
-            
+
         for color_name, hex_value in Colors.DEFAULT_COLORS.items():
             if color_name not in self.config["COLORS"]:
                 self.config["COLORS"][color_name] = hex_value
@@ -38,12 +38,12 @@ class ConfigManager:
     def get_color(self, color_name):
         """Get a color value from config."""
         color_value = self.config["COLORS"].get(color_name.lower())
-        
+
         if not color_value:
             color_value = Colors.DEFAULT_COLORS.get(color_name.lower(), "FFFFFF")
-            
+
         return color_value
-    
+
     def set_color(self, color_name, hex_value):
         """Set a color value in config."""
         if "COLORS" not in self.config:

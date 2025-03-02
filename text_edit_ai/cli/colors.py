@@ -3,7 +3,7 @@ class Colors:
 
     DEFAULT_COLORS = {
         "green": "4E9A06",
-        "red": "CC0000",  
+        "red": "CC0000",
         "yellow": "C4A000",
         "blue": "3465A4",
         "grey": "555753",

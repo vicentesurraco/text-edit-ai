@@ -16,7 +16,7 @@ class LangchainManager:
 
     def get_model(self):
         """Get appropriate chat model based on model name.
-        
+
         Uses ChatGoogleGenerativeAI directly for Google models,
         and init_chat_model for other providers.
         """
@@ -24,9 +24,7 @@ class LangchainManager:
         try:
             if self.model_name.startswith("gemini"):
                 return ChatGoogleGenerativeAI(
-                    model=self.model_name, 
-                    google_api_key=self.api_key, 
-                    temperature=0
+                    model=self.model_name, google_api_key=self.api_key, temperature=0
                 )
             return init_chat_model(self.model_name, api_key=self.api_key, temperature=0)
         except Exception as e:
@@ -41,7 +39,10 @@ class LangchainManager:
             prompt = ChatPromptTemplate.from_messages(
                 [
                     ("system", self.system_prompt),
-                    ("user", f"<context>{context}</context><writing>{writing}</writing>"),
+                    (
+                        "user",
+                        f"<context>{context}</context><writing>{writing}</writing>",
+                    ),
                 ]
             )
             messages = prompt.format_messages()
