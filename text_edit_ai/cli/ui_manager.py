@@ -6,17 +6,17 @@ class UIManager:
 
     def get_initial_action(self, section: str) -> str:
         """Get initial action from user for a section."""
-        print(f"\n{Colors.grey}=== ORIGINAL ==={Colors.RESET}")
+        print(f"\n{Colors.grey}=== ORIGINAL ==={Colors.reset}")
         print(f"\n{section}\n")
-        print(f"{Colors.grey}=== ORIGINAL ==={Colors.RESET}\n")
+        print(f"{Colors.grey}=== ORIGINAL ==={Colors.reset}\n")
 
         while True:
             action = (
                 input(
-                    f"{Colors.green}(c)ontinue{Colors.RESET} / "
-                    f"{Colors.yellow}(s)kip{Colors.RESET} / "
-                    f"{Colors.blue}si(z)e{Colors.RESET} / "
-                    f"{Colors.red}e(x)it{Colors.RESET}: "
+                    f"{Colors.green}(c)ontinue{Colors.reset} / "
+                    f"{Colors.yellow}(s)kip{Colors.reset} / "
+                    f"{Colors.blue}si(z)e{Colors.reset} / "
+                    f"{Colors.red}e(x)it{Colors.reset}: "
                 )
                 .strip()
                 .lower()
@@ -40,13 +40,13 @@ class UIManager:
         while True:
             action = (
                 input(
-                    f"{Colors.green}(a)ccept{Colors.RESET} / "
-                    f"{Colors.yellow}(s)kip{Colors.RESET} / "
-                    f"{Colors.orange}se(c)tion prompt{Colors.RESET} / "
-                    f"{Colors.orange}s(y)stem prompt{Colors.RESET} / "
-                    f"{Colors.blue}si(z)e{Colors.RESET} / "
-                    f"{Colors.red}e(x)it{Colors.RESET} / "
-                    f"{Colors.purple}(m)arkup{Colors.RESET}: "
+                    f"{Colors.green}(a)ccept{Colors.reset} / "
+                    f"{Colors.yellow}(s)kip{Colors.reset} / "
+                    f"{Colors.orange}se(c)tion prompt{Colors.reset} / "
+                    f"{Colors.orange}s(y)stem prompt{Colors.reset} / "
+                    f"{Colors.blue}si(z)e{Colors.reset} / "
+                    f"{Colors.red}e(x)it{Colors.reset} / "
+                    f"{Colors.purple}(m)arkup{Colors.reset}: "
                 )
                 .strip()
                 .lower()
@@ -62,7 +62,6 @@ class UIManager:
                 return "system_prompt"
             elif action in {"markup", "m"}:
                 self.display_markup(diff_text)
-                # Continue loop to show options again
             elif action in {"size", "z"}:
                 return "size"
             elif action in {"exit", "x"}:
@@ -96,15 +95,15 @@ class UIManager:
 
     def display_edited(self, edited_text: str) -> None:
         """Display the edited text."""
-        print(f"\n{Colors.grey}=== AI EDIT ==={Colors.RESET}")
+        print(f"\n{Colors.grey}=== AI EDIT ==={Colors.reset}")
         print(f"\n{edited_text}\n")
-        print(f"{Colors.grey}=== AI EDIT ==={Colors.RESET}\n")
+        print(f"{Colors.grey}=== AI EDIT ==={Colors.reset}\n")
 
     def display_markup(self, diff_text: str) -> None:
         """Display the markup text."""
-        print(f"\n{Colors.purple}=== MARKUP ==={Colors.RESET}")
+        print(f"\n{Colors.purple}=== MARKUP ==={Colors.reset}")
         print(f"\n{diff_text}\n")
-        print(f"{Colors.purple}=== MARKUP ==={Colors.RESET}\n")
+        print(f"{Colors.purple}=== MARKUP ==={Colors.reset}\n")
 
     def show_completion_message(self) -> None:
         """Show completion message."""

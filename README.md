@@ -10,7 +10,7 @@ A command-line tool for editing text with the assistance of AI, using language m
 2. Install the required dependencies:
    Run `uv sync --lockfile uv.lock`.
 
-   **Note:** Ensure you have Python 3.8 or higher installed, and `uv` installed globally.
+   **Note:** Ensure you have Python 3.9 or higher installed, and `uv` installed globally.
 
 ## Usage
 
@@ -21,6 +21,7 @@ Run the tool with the following command:
 
 - `--api-key`: Set the API key for the language model.
 - `--prompt "Your prompt"`: Set a custom system prompt for the specified file.
+- `--model "model_name"`: Use a specific model for this session (e.g., "gemini-2.0-flash", "gpt-4-turbo").
 
 ### Examples
 
@@ -33,11 +34,15 @@ Run the tool with the following command:
 - To set a custom system prompt for `my_book.txt`:
   `uv run -m text_edit_ai.cli my_book.txt --prompt "Improve the clarity and conciseness of this text."`
 
+- To use a specific model for the current editing session:
+  `uv run -m text_edit_ai.cli my_book.txt --model "gpt-4-turbo"`
+
 ## Configuration
 
 The tool stores configurations in `~/.ai_text_editor.cfg`:
 
 - **API Keys**: Securely stores your language model API key
+- **Models**: Saves your default model selection
 - **Prompts**: File-specific system prompts
 - **Colors**: Customizable color schemes for the UI
 - **File Position**: Remembers where you left off in each file
@@ -55,7 +60,7 @@ yellow = FFBA08 # Used for skip
 blue = 5BC0BE # Used for size
 grey = C8C8A9 # Used for section headers
 purple = DF78EF # Used for markup display
-orange = FF9300 # Used for prompt options
+orange = FF9300 # Used for section/system prompt options
 ```
 
 ## Workflow

@@ -1,19 +1,10 @@
 import configparser
 import os
+from .colors import Colors
 
 
 class ConfigManager:
     CONFIG_FILE = os.path.join(os.path.expanduser("~"), ".ai_text_editor.cfg")
-
-    DEFAULT_COLORS = {
-        "GREEN": "7EC752",
-        "RED": "FF6D52",
-        "YELLOW": "FFBA08",
-        "BLUE": "5BC0BE",
-        "GREY": "C8C8A9",
-        "PURPLE": "DF78EF",
-        "ORANGE": "FF9300",
-    }
 
     def __init__(self):
         self.config = self.get_config()
@@ -37,9 +28,8 @@ class ConfigManager:
         """Ensure color configuration exists with defaults."""
         if "COLORS" not in self.config:
             self.config["COLORS"] = {}
-
-        # Set any missing colors to defaults
-        for color_name, hex_value in self.DEFAULT_COLORS.items():
+            
+        for color_name, hex_value in Colors.DEFAULT_COLORS.items():
             if color_name not in self.config["COLORS"]:
                 self.config["COLORS"][color_name] = hex_value
 
@@ -47,15 +37,18 @@ class ConfigManager:
 
     def get_color(self, color_name):
         """Get a color value from config."""
-        return self.config["COLORS"].get(
-            color_name, self.DEFAULT_COLORS.get(color_name, "FFFFFF")
-        )
-
+        color_value = self.config["COLORS"].get(color_name.lower())
+        
+        if not color_value:
+            color_value = Colors.DEFAULT_COLORS.get(color_name.lower(), "FFFFFF")
+            
+        return color_value
+    
     def set_color(self, color_name, hex_value):
         """Set a color value in config."""
         if "COLORS" not in self.config:
             self.config["COLORS"] = {}
-        self.config["COLORS"][color_name] = hex_value
+        self.config["COLORS"][color_name.lower()] = hex_value
         self.save_config()
 
     def save_config(self):
@@ -86,6 +79,22 @@ class ConfigManager:
         self.config["DEFAULT"]["api_key"] = api_key
         self.save_config()
         print("API key set successfully.")
+        return api_key
+
+    def get_model(self):
+        """Get model name from config, or return the default if not set"""
+        model = self.config["DEFAULT"].get("model")
+        if not model:
+            return self.set_model()
+        return model
+
+    def set_model(self):
+        """Set model name in config"""
+        model = input("Enter the model name: ")
+        self.config["DEFAULT"]["model"] = model
+        self.save_config()
+        print(f"Model set to: {model}")
+        return model
 
     def set_pos(self, file, pos):
         """

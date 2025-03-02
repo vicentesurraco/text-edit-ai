@@ -21,7 +21,6 @@ class FileProcessor:
         self.file = file
         self.output_file = file.split(".")[0] + "_edited.txt"
 
-        # Create specialized managers
         self.session_manager = SessionManager(
             config_manager, file, paragraphs_per_section
         )
@@ -36,7 +35,6 @@ class FileProcessor:
         while not self.session_manager.is_complete():
             section = self.session_manager.get_current_section()
 
-            # Handle initial action (continue, skip, etc.)
             action = self.ui_manager.get_initial_action(section)
 
             if action == "continue":

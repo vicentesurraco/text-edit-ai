@@ -1,6 +1,16 @@
 class Colors:
     """ANSI color codes for terminal output."""
 
+    DEFAULT_COLORS = {
+        "green": "4E9A06",
+        "red": "CC0000",  
+        "yellow": "C4A000",
+        "blue": "3465A4",
+        "grey": "555753",
+        "purple": "75507B",
+        "orange": "CE5C00",
+    }
+
     # These will be populated dynamically when initialize() is called
     green = ""
     red = ""
@@ -11,8 +21,8 @@ class Colors:
     orange = ""
 
     # Non-color values
-    STRIKE = "\033[9m"
-    RESET = "\033[0m"
+    strike = "\033[9m"
+    reset = "\033[0m"
 
     @staticmethod
     def from_hex(hex_color: str) -> str:
@@ -31,10 +41,6 @@ class Colors:
     @classmethod
     def initialize(cls, config_manager):
         """Initialize color values from config manager."""
-        cls.green = cls.from_hex(config_manager.get_color("GREEN"))
-        cls.red = cls.from_hex(config_manager.get_color("RED"))
-        cls.yellow = cls.from_hex(config_manager.get_color("YELLOW"))
-        cls.blue = cls.from_hex(config_manager.get_color("BLUE"))
-        cls.grey = cls.from_hex(config_manager.get_color("GREY"))
-        cls.purple = cls.from_hex(config_manager.get_color("PURPLE"))
-        cls.orange = cls.from_hex(config_manager.get_color("ORANGE"))
+        for color_name in cls.DEFAULT_COLORS:
+            config_value = config_manager.get_color(color_name)
+            setattr(cls, color_name, cls.from_hex(config_value))

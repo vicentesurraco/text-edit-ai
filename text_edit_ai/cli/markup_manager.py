@@ -1,6 +1,5 @@
 import difflib
 import re
-from typing import List
 from .colors import Colors
 
 
@@ -15,13 +14,6 @@ class MarkupManager:
     def generate_diff(self, original_text: str, edited_text: str) -> str:
         """
         Generate a word-level diff showing specific changes.
-
-        Args:
-            original_text: The original text
-            edited_text: The edited text
-
-        Returns:
-            Formatted diff text with color markup
         """
         original_tokens = self._tokenize(original_text)
         edited_tokens = self._tokenize(edited_text)
@@ -32,7 +24,7 @@ class MarkupManager:
         return diff_text
 
     @staticmethod
-    def _tokenize(text: str) -> List[str]:
+    def _tokenize(text: str) -> list[str]:
         """
         Split text into tokens (words, spaces, and punctuation).
 
@@ -45,8 +37,8 @@ class MarkupManager:
         return re.findall(r"\w+|\S+|\s+", text)
 
     def _calculate_diff(
-        self, original_tokens: List[str], edited_tokens: List[str]
-    ) -> List[str]:
+        self, original_tokens: list[str], edited_tokens: list[str]
+    ) -> list[str]:
         """
         Calculate differences between token lists and produce formatted diff tokens.
 
@@ -65,14 +57,14 @@ class MarkupManager:
                 result.extend(original_tokens[i1:i2])
             elif tag == "delete":
                 for token in original_tokens[i1:i2]:
-                    result.append(f"{Colors.red}{Colors.STRIKE}{token}{Colors.RESET}")
+                    result.append(f"{Colors.red}{Colors.strike}{token}{Colors.reset}")
             elif tag == "insert":
                 for token in edited_tokens[j1:j2]:
-                    result.append(f"{Colors.green}{token}{Colors.RESET}")
+                    result.append(f"{Colors.green}{token}{Colors.reset}")
             elif tag == "replace":
                 for token in original_tokens[i1:i2]:
-                    result.append(f"{Colors.red}{Colors.STRIKE}{token}{Colors.RESET}")
+                    result.append(f"{Colors.red}{Colors.strike}{token}{Colors.reset}")
                 for token in edited_tokens[j1:j2]:
-                    result.append(f"{Colors.green}{token}{Colors.RESET}")
+                    result.append(f"{Colors.green}{token}{Colors.reset}")
 
         return result
