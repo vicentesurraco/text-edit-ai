@@ -121,7 +121,7 @@ class ConfigManager:
         if file:
             file_config = self.get_file_config(file)
             return file_config.get("file_prompt", self.get_file_prompt())
-        
+
         file_prompt = self.config["DEFAULT"].get("file_prompt")
         if not file_prompt:
             return self.set_file_prompt()
@@ -135,7 +135,7 @@ class ConfigManager:
         """
         while not file_prompt:
             file_prompt = input("Enter the file prompt: ")
-        
+
         if file:
             file_config = self.get_file_config(file)
             file_config["file_prompt"] = file_prompt
@@ -145,5 +145,5 @@ class ConfigManager:
             self.config["DEFAULT"]["file_prompt"] = file_prompt
             self.save_config()
             print("File prompt set successfully.")
-        
+
         return file_prompt

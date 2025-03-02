@@ -238,9 +238,7 @@ def test_process_with_ai_file_prompt(file_processor, mock_dependencies):
     diff_text2 = "Diff text 2"
 
     # Set up the mocks
-    mock_dependencies[
-        "config_manager"
-    ].get_file_prompt.return_value = old_file_prompt
+    mock_dependencies["config_manager"].get_file_prompt.return_value = old_file_prompt
     mock_dependencies["langchain_manager"].get_response.side_effect = [
         edited_text1,
         edited_text2,
