@@ -2,13 +2,13 @@ class Colors:
     """ANSI color codes for terminal output."""
 
     DEFAULT_COLORS = {
-        "green": "4E9A06",
-        "red": "CC0000",
-        "yellow": "C4A000",
-        "blue": "3465A4",
-        "grey": "555753",
-        "purple": "75507B",
-        "orange": "CE5C00",
+        "green": "AEDA7C",
+        "red": "FE6B7B",
+        "yellow": "FFC569",
+        "blue": "63E4FE",
+        "grey": "C796FE",
+        "purple": "C796FE",
+        "orange": "FF7F01",
     }
 
     # These will be populated dynamically when initialize() is called
