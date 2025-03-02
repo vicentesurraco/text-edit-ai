@@ -5,8 +5,19 @@ import os
 class ConfigManager:
     CONFIG_FILE = os.path.join(os.path.expanduser("~"), ".ai_text_editor.cfg")
 
+    DEFAULT_COLORS = {
+        "GREEN": "7EC752",
+        "RED": "FF6D52",
+        "YELLOW": "FFBA08",
+        "BLUE": "5BC0BE",
+        "GREY": "C8C8A9",
+        "PURPLE": "DF78EF",
+        "ORANGE": "FF9300",
+    }
+
     def __init__(self):
         self.config = self.get_config()
+        self._ensure_color_config()
 
     def get_config(self):
         """
@@ -15,7 +26,37 @@ class ConfigManager:
         """
         self.config = configparser.ConfigParser()
         self.config.read(self.CONFIG_FILE)
+
+        # Ensure default section exists
+        if "DEFAULT" not in self.config:
+            self.config["DEFAULT"] = {}
+
         return self.config
+
+    def _ensure_color_config(self):
+        """Ensure color configuration exists with defaults."""
+        if "COLORS" not in self.config:
+            self.config["COLORS"] = {}
+
+        # Set any missing colors to defaults
+        for color_name, hex_value in self.DEFAULT_COLORS.items():
+            if color_name not in self.config["COLORS"]:
+                self.config["COLORS"][color_name] = hex_value
+
+        self.save_config()
+
+    def get_color(self, color_name):
+        """Get a color value from config."""
+        return self.config["COLORS"].get(
+            color_name, self.DEFAULT_COLORS.get(color_name, "FFFFFF")
+        )
+
+    def set_color(self, color_name, hex_value):
+        """Set a color value in config."""
+        if "COLORS" not in self.config:
+            self.config["COLORS"] = {}
+        self.config["COLORS"][color_name] = hex_value
+        self.save_config()
 
     def save_config(self):
         """

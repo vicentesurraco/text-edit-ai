@@ -1,12 +1,35 @@
+import os
 from .config_manager import ConfigManager
 from .prompt_manager import PromptManager
 from .langchain_manager import LangchainManager
 from .file_processor import FileProcessor
+from .colors import Colors
 import argparse
+
+
+def setup_terminal_colors(config_manager):
+    """
+    Configure terminal to support ANSI color codes and initialize Colors enum.
+
+    Args:
+        config_manager: The application's configuration manager
+    """
+    # Enable Windows terminal colors if needed
+    if os.name == "nt":  # Windows
+        os.system("color")
+
+    # Initialize colors from configuration
+    Colors.initialize(config_manager)
 
 
 def main():
     """Main entry point for the CLI."""
+    # Initialize configuration first
+    config_manager = ConfigManager()
+
+    # Set up terminal colors at program start
+    setup_terminal_colors(config_manager)
+
     parser = argparse.ArgumentParser(description="AI Book Editor")
     parser.add_argument("file", nargs="?", help="The book file to edit")
     parser.add_argument("--prompt", help="Set the system prompt for this file")
@@ -14,7 +37,6 @@ def main():
 
     args = parser.parse_args()
 
-    config_manager = ConfigManager()
     prompt_manager = PromptManager(config_manager)
 
     if args.api_key:
