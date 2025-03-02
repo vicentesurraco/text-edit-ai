@@ -49,8 +49,8 @@ Under the `[COLORS]` section, you can modify any of these colors by changing the
 
 ```
 [COLORS]
-green = 7EC752 # Used for accept/continue
-red = FF6D52 # Used for exit/cancel
+green = 7EC752 # Used for accept/continue/added markup
+red = FF6D52 # Used for exit/removed markup
 yellow = FFBA08 # Used for skip
 blue = 5BC0BE # Used for size
 grey = C8C8A9 # Used for section headers
