@@ -21,6 +21,7 @@ Run the tool with the following command:
 
 - `--api-key`: Set the API key for the language model.
 - `--prompt "Your prompt"`: Set a custom file prompt for the specified file.
+- `--prompt-file "path/to/prompt.txt"`: Use a prompt from a file instead of directly specifying it.
 - `--model "model_name"`: Use a specific model for this session (e.g., "gemini-2.0-flash", "gpt-4-turbo").
 
 ### Examples
@@ -33,6 +34,9 @@ Run the tool with the following command:
 
 - To set a custom file prompt for `my_book.txt`:
   `uv run -m text_edit_ai.cli my_book.txt --prompt "Improve the clarity and conciseness of this text."`
+
+- To use a prompt from a file for `my_book.txt`:
+  `uv run -m text_edit_ai.cli my_book.txt --prompt-file "my_detailed_prompt.txt"`
 
 - To use a specific model for the current editing session:
   `uv run -m text_edit_ai.cli my_book.txt --model "gpt-4-turbo"`
@@ -61,6 +65,16 @@ blue = 5BC0BE # Used for size
 purple = DF78EF # Used for markup display and section headers
 orange = FF9300 # Used for section/file prompt options
 ```
+
+### Using Prompt Files
+
+For complex or very large prompts, you can store them in separate text files and reference them using the `--prompt-file` option. This is especially useful when:
+
+- Your prompt is too large to type on the command line
+- You want to reuse the same detailed prompt across multiple editing sessions
+- You need to include formatting or special characters in your prompt
+
+The tool will read the prompt directly from the file each time it's needed, so you can edit the prompt file between sections if needed.
 
 ## Workflow
 

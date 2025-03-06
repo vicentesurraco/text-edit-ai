@@ -120,6 +120,15 @@ class ConfigManager:
         """
         if file:
             file_config = self.get_file_config(file)
+            prompt_file = file_config.get("prompt_file")
+
+            if prompt_file and os.path.exists(prompt_file):
+                try:
+                    with open(prompt_file, "r") as f:
+                        return f.read()
+                except Exception as e:
+                    print(f"Error reading prompt file: {e}")
+
             return file_config.get("file_prompt", self.get_file_prompt())
 
         file_prompt = self.config["DEFAULT"].get("file_prompt")
@@ -139,6 +148,9 @@ class ConfigManager:
         if file:
             file_config = self.get_file_config(file)
             file_config["file_prompt"] = file_prompt
+            # Clear any prompt_file reference when directly setting a prompt
+            if "prompt_file" in file_config:
+                del file_config["prompt_file"]
             self.save_config()
             print(f"File prompt set for {file}.")
         else:
@@ -147,3 +159,29 @@ class ConfigManager:
             print("File prompt set successfully.")
 
         return file_prompt
+
+    def set_file_prompt_from_file(self, file, prompt_file_path):
+        """
+        Set the file prompt by referencing a file containing the prompt.
+        This is useful for large prompts that might exceed token limits when stored in config.
+
+        Args:
+            file: The target file to associate the prompt with
+            prompt_file_path: Path to the file containing the prompt
+        """
+        if not os.path.exists(prompt_file_path):
+            print(f"Error: Prompt file '{prompt_file_path}' not found.")
+            return
+
+        try:
+            file_config = self.get_file_config(file)
+            file_config["prompt_file"] = os.path.abspath(prompt_file_path)
+
+            if "file_prompt" in file_config:
+                del file_config["file_prompt"]
+
+            self.save_config()
+            print(f"File prompt set from '{prompt_file_path}' for {file}.")
+
+        except Exception as e:
+            print(f"Error reading prompt file: {e}")

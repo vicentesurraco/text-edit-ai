@@ -24,6 +24,9 @@ def main():
     parser = argparse.ArgumentParser(description="AI Book Editor")
     parser.add_argument("file", nargs="?", help="The book file to edit")
     parser.add_argument("--prompt", help="Set the file prompt for this file")
+    parser.add_argument(
+        "--prompt-file", help="Path to a file containing the prompt to use"
+    )
     parser.add_argument("--api-key", action="store_true", help="Set the API key")
     parser.add_argument(
         "--model",
@@ -46,7 +49,9 @@ def main():
     if args.prompt and args.file:
         config_manager.set_file_prompt(args.file, args.prompt)
         print(f"File prompt set to: {args.prompt} for {args.file}")
-        return
+
+    if args.prompt_file and args.file:
+        config_manager.set_file_prompt_from_file(args.file, args.prompt_file)
 
     if not args.file:
         print("Please specify a file to edit.")
