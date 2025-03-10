@@ -48,7 +48,7 @@ def main():
 
     if args.prompt and args.file:
         config_manager.set_file_prompt(args.file, args.prompt)
-        print(f"File prompt set to: {args.prompt} for {args.file}")
+        print(f"File prompt set to: '{args.prompt}' for {args.file}")
 
     if args.prompt_file and args.file:
         config_manager.set_file_prompt_from_file(args.file, args.prompt_file)

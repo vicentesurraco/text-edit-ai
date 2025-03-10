@@ -120,7 +120,7 @@ class ConfigManager:
         """
         if file:
             file_config = self.get_file_config(file)
-            prompt_file = file_config.get("prompt_file")
+            prompt_file = file_config.get("file_prompt")
 
             if prompt_file and os.path.exists(prompt_file):
                 try:
@@ -131,28 +131,21 @@ class ConfigManager:
 
             return file_config.get("file_prompt", self.get_file_prompt())
 
-        file_prompt = self.config["DEFAULT"].get("file_prompt")
-        if not file_prompt:
-            return self.set_file_prompt()
-        return file_prompt
-
     def set_file_prompt(self, file=None, file_prompt=None):
         """
         Set the file prompt in config.
         If file is specified, set file-specific prompt.
         Otherwise, set the global default prompt.
         """
-        while not file_prompt:
+        while not file_prompt and not self.get_file_config(file).get("file_prompt"):
             file_prompt = input("Enter the file prompt: ")
 
         if file:
             file_config = self.get_file_config(file)
+            if "file_prompt" in file_config:
+                del file_config["file_prompt"]
             file_config["file_prompt"] = file_prompt
-            # Clear any prompt_file reference when directly setting a prompt
-            if "prompt_file" in file_config:
-                del file_config["prompt_file"]
             self.save_config()
-            print(f"File prompt set for {file}.")
         else:
             self.config["DEFAULT"]["file_prompt"] = file_prompt
             self.save_config()
@@ -175,7 +168,7 @@ class ConfigManager:
 
         try:
             file_config = self.get_file_config(file)
-            file_config["prompt_file"] = os.path.abspath(prompt_file_path)
+            file_config["file_prompt"] = os.path.abspath(prompt_file_path)
 
             if "file_prompt" in file_config:
                 del file_config["file_prompt"]
