@@ -96,3 +96,7 @@ The tool will read the prompt directly from the file each time it's needed, so y
    - `exit`: Exit the program.
 
 4. **Output**: Edited or skipped sections are appended to a new file named `[original_filename]_edited.txt`.
+
+### Contributing
+
+If you'd like to contribute, please fork the repository and open a pull request to the `main` branch.
